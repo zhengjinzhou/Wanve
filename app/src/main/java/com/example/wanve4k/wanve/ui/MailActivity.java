@@ -43,6 +43,7 @@ public class MailActivity extends BaseActivity {
     private List<MailBean> mUserListBeen;
 
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
+    @BindView(R.id.txtTitle) TextView txtTitle;
     HomeAdapter adapter;
 
     @Override
@@ -52,6 +53,7 @@ public class MailActivity extends BaseActivity {
 
     @Override
     public void init() {
+        txtTitle.setText("通讯录");
         //获取联系人列表
         String addressBook = FileDataUtil.loadDataFile(getApplicationContext(), "AddressBook");
         Gson gson = new Gson();

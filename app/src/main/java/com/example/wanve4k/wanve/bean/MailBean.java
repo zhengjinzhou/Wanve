@@ -20,7 +20,7 @@ public class MailBean implements Parcelable {
     private String KSName;
     private List<UserListBean> UserList;
 
-    protected MailBean(Parcel in) {
+    public MailBean(Parcel in) {
         this.KSName = in.readString();
         this.UserList = new ArrayList<UserListBean>();
         in.readList(this.UserList, UserListBean.class.getClassLoader());
@@ -151,7 +151,7 @@ public class MailBean implements Parcelable {
 
         @Override
         public String toString() {
-            return "UserListBean{" +
+            return "{" +
                     "UserName='" + UserName + '\'' +
                     ", MobileNumber='" + MobileNumber + '\'' +
                     ", MobileNumber2='" + MobileNumber2 + '\'' +
@@ -166,7 +166,7 @@ public class MailBean implements Parcelable {
 
     @Override
     public String toString() {
-        return "MailBean{" +
+        return "{" +
                 "KSName='" + KSName + '\'' +
                 ", UserList=" + UserList +
                 '}';

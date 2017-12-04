@@ -225,7 +225,6 @@ public class LoginActivity extends BaseActivity {
                 final LoginBean loginBean = gson.fromJson(news, LoginBean.class);
                 //判断是否成功登录
                 if (loginBean.isResult()) {
-                    Log.d(TAG, "onResponse: ------------------------------------------------"+userVpn.isVpn());
                     if (userVpn != null && userVpn.isVpn()){
                         //启动vpn
                         Log.d(TAG, "onResponse: ---------------");
@@ -242,6 +241,11 @@ public class LoginActivity extends BaseActivity {
                             }
                         });
                         t.start();
+                        userBean.setUsername(user);
+                        userBean.setPassword(psw);
+                        userBean.setAutomitic(isAutomatic);
+                        userBean.setRemenber(isRemenber);
+                        SpUtil.putObject(getApplication(), Constant.USER_SHAREPRE, userBean);
                     }else{
                         String main_url = Constant.HUAMBO_MAIN_URL + "{UserID:'" + user + "'" + ",UserPsw:'" + psw + "'}";//首页地址
                         userBean.setUsername(user);
@@ -256,6 +260,7 @@ public class LoginActivity extends BaseActivity {
                         startActivity(intent);
                         finish();
                     }
+
                 } else {
                     runOnUiThread(new Runnable() {
                         @Override

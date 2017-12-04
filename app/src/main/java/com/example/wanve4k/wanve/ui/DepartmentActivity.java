@@ -37,11 +37,14 @@ public class DepartmentActivity extends BaseActivity {
     private static final String TAG = "DepartmentActivity";
     RxPermissions mRxPermissions;
     static ArrayList<UserListBean> mUserListBeans;
-    static ArrayList<UserListBean> mTempUserListBeans;
+    static List<MailBean.UserListBean> mTempUserListBeans ;
     PopupContactsInfoControl mPopupContactsInfoControl;
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
+    @BindView(R.id.tv_title) TextView tv_title;
+
     DepartmentAdapter adapter;
-    MailBean mMailBean;
+    MailBean mailBean;
+    private DepartmentAdapter mDepartmentAdapter;
 
     public static void newInstance(Context context, String str) {
         Intent intent = new Intent(context, DepartmentActivity.class);
@@ -58,13 +61,22 @@ public class DepartmentActivity extends BaseActivity {
 
     @Override
     public void init() {
+        mDepartmentAdapter = new DepartmentAdapter();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(mDepartmentAdapter);
+
         Bundle bundle = getIntent().getExtras();
         if (null != bundle) {
             String string = bundle.getString(Constant.DEPARTMENTLIST);
             Log.d(TAG, "init: "+string);
+            Gson gson = new Gson();
+            mailBean = gson.fromJson(string, MailBean.class);
+            tv_title.setText(mailBean.getKSName());
+            mTempUserListBeans = mailBean.getUserList();
 
+        }else{
+            ToastUtil.show(getApplicationContext(),"请重试");
         }
-
     }
 
     @OnClick({R.id.lyLeftContainer}) void onClick(View view){
@@ -89,8 +101,8 @@ public class DepartmentActivity extends BaseActivity {
         public void onBindViewHolder(MyViewHolder holder, int position) {
             holder.tv.setText(mTempUserListBeans.get(position).getUserName());
             holder.itemView.setOnClickListener(arg0 -> {
-                DepartmentInfoActivity.newInstance(DepartmentActivity.this, mMailBean.getKSName(), mTempUserListBeans.get(position));
-
+                DepartmentInfoActivity.newInstance(DepartmentActivity.this,mailBean.getKSName(),mTempUserListBeans.get(position).toString());
+               // ToastUtil.show(getApplicationContext(),mTempUserListBeans.get(position).toString());
             });
         }
 
