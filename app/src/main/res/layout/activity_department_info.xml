@@ -183,7 +183,8 @@
                     <ImageView
                         android:layout_width="32dp"
                         android:layout_height="32dp"
-                        android:layout_centerInParent="true" />
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/duanhao" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -213,8 +214,7 @@
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.3">
-                </RelativeLayout>
+                    android:layout_weight="0.3"></RelativeLayout>
 
             </LinearLayout>
 
@@ -229,9 +229,10 @@
                     android:layout_weight="0.3">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true" />
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/zuoji" />
 
                 </RelativeLayout>
 
@@ -302,6 +303,7 @@
                         android:layout_height="wrap_content"
                         android:maxLines="1"
                         android:textSize="16sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -332,10 +334,10 @@
                     android:layout_weight="0.3">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
                         android:layout_centerInParent="true"
-                         />
+                        android:src="@drawable/address" />
 
                 </RelativeLayout>
 
@@ -353,6 +355,7 @@
                         android:layout_height="wrap_content"
                         android:maxLines="1"
                         android:textSize="16sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
