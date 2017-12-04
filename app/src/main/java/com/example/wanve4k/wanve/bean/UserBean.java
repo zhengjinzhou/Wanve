@@ -3,6 +3,8 @@ package com.example.wanve4k.wanve.bean;
 /**
  * Created by zhou on 2017/11/28.
  *
+ * 用户信息与vpn登录信息
+ *
  */
 
 public class UserBean {
