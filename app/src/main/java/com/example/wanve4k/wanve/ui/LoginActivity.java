@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.wanve4k.wanve.R;
@@ -43,6 +45,8 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.et_password) EditText et_password;
     @BindView(R.id.cb_remember) CheckBox cb_remember;
     @BindView(R.id.cb_automatic) CheckBox cb_automatic;
+    @BindView(R.id.iv_show) ImageView iv_show;
+
     boolean isRemenber = false;
     boolean isAutomatic = false;
     private UserBean userBean;
@@ -111,11 +115,16 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void init() {
         userBean = new UserBean();
-        userVpn = (UserBean) SpUtil.getObject(this, Constant.USER_VPN_LOGINCACHE, UserBean.class);
-        Log.d(TAG, "init: "+userVpn.isVpn());
-        Log.d(TAG, "init: "+userVpn.getVpnUsername());
+        //userVpn = (UserBean) SpUtil.getObject(this, Constant.USER_VPN_LOGINCACHE, UserBean.class);
+        iv_show.setBackgroundResource(R.drawable.login__user_pass_visible);
         setInfo();
         getCheckBox();
+    }
+
+    @Override
+    protected void onResume() {
+        userVpn = (UserBean) SpUtil.getObject(this, Constant.USER_VPN_LOGINCACHE, UserBean.class);
+        super.onResume();
     }
 
     private void setInfo() {
@@ -127,7 +136,6 @@ public class LoginActivity extends BaseActivity {
             cb_remember.setChecked(userBean.isRemenber());
             cb_automatic.setChecked(userBean.isAutomitic());
         }
-
     }
 
     private void getCheckBox() {
@@ -156,7 +164,17 @@ public class LoginActivity extends BaseActivity {
                 et_username.setText("");
                 break;
             case R.id.iv_show:
-
+                //这是一段很有意思的代码，根据点击来显示与隐藏密码
+                int type = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD;
+                if (et_password.getInputType() == type) {
+                    iv_show.setBackgroundResource(R.drawable.login_user_pass_show);
+                    et_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    et_password.setSelection(et_password.getText().length());     //把光标设置到当前文本末尾
+                } else {
+                    iv_show.setBackgroundResource(R.drawable.login__user_pass_visible);
+                    et_password.setInputType(type);
+                    et_password.setSelection(et_password.getText().length());
+                }
                 break;
             case R.id.bt_login:
                 String username = et_username.getText().toString().trim();
@@ -205,8 +223,9 @@ public class LoginActivity extends BaseActivity {
                 String news = response.body().string();
                 Gson gson = new Gson();
                 final LoginBean loginBean = gson.fromJson(news, LoginBean.class);
+                //判断是否成功登录
                 if (loginBean.isResult()) {
-
+                    Log.d(TAG, "onResponse: ------------------------------------------------"+userVpn.isVpn());
                     if (userVpn != null && userVpn.isVpn()){
                         //启动vpn
                         Log.d(TAG, "onResponse: ---------------");
