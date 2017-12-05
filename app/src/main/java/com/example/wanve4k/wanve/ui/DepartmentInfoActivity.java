@@ -92,9 +92,12 @@ public class DepartmentInfoActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.rl_call, R.id.rl_message})
+    @OnClick({R.id.rl_call, R.id.rl_message,R.id.lyLeftContainer})
     void onClick(View view) {
         switch (view.getId()) {
+            case R.id.lyLeftContainer:
+                finish();
+                break;
             case R.id.rl_call:
                 Call(userListBean.getMobileNumber());
                 break;

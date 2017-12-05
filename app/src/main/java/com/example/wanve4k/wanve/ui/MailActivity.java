@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -41,6 +43,7 @@ public class MailActivity extends BaseActivity {
     private static final String TAG = "MailActivity";
     private String mailStr;
     private List<MailBean> mUserListBeen;
+    private List<MailBean> mTempUserListBeen;
 
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     @BindView(R.id.txtTitle) TextView txtTitle;
@@ -57,12 +60,34 @@ public class MailActivity extends BaseActivity {
         //获取联系人列表
         String addressBook = FileDataUtil.loadDataFile(getApplicationContext(), "AddressBook");
         Gson gson = new Gson();
+
         mUserListBeen = gson.fromJson(addressBook, new TypeToken<List<MailBean>>(){}.getType());
+        mTempUserListBeen = gson.fromJson(addressBook, new TypeToken<List<MailBean>>(){}.getType());
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new HomeAdapter();
         recyclerView.setAdapter(adapter);
     }
+    @OnClick({R.id.lyLeftContainer}) void onClick(View view){
+        switch (view.getId()){
+            case R.id.lyLeftContainer:
+                finish();
+                break;
+        }
+    }
 
+    @OnTextChanged(value = R.id.et_search,callback = OnTextChanged.Callback.TEXT_CHANGED)
+    void onTextChange(CharSequence s, int start, int before, int count){
+        if (!TextUtils.isEmpty(s)){
+            mUserListBeen.clear();
+            for (MailBean user : mTempUserListBeen){
+                if (user.getKSName().indexOf(s.toString()) != -1){
+                    mUserListBeen.add(user);
+                }
+            }
+            adapter.notifyDataSetChanged();
+        }
+    }
     class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> {
 
         @Override
