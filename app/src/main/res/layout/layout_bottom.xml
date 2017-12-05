@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="#E8E8E8">
+
+    <TextView
+        android:id="@+id/tv_index"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="0.5dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_click"
+        android:gravity="center"
+        android:text="首页" />
+
+    <TextView
+        android:id="@+id/tv_map"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="0.5dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_click"
+        android:gravity="center"
+        android:text="项目地图" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="0.5dp"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_sum"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@drawable/bg_click"
+                android:gravity="center"
+                android:text="汇总统计" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:padding="5dp"
+                android:src="@drawable/triangle" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_center"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@drawable/bg_click"
+                android:gravity="center"
+                android:text="知识中心" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:padding="5dp"
+                android:src="@drawable/triangle" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

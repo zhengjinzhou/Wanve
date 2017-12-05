@@ -1,13 +1,17 @@
 package com.example.wanve4k.wanve.ui;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -16,6 +20,7 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.example.wanve4k.wanve.R;
 import com.example.wanve4k.wanve.base.BaseActivity;
@@ -44,6 +49,9 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.web_main) WebView mWebView;
     @BindView(R.id.iv_titleBar_right_img) ImageView iv_titleBar_right_img;
     @BindView(R.id.v_top) View v_top;
+    @BindView(R.id.tv_sum) TextView tv_sum;
+    @BindView(R.id.tv_center) TextView tv_center;
+
     private String mHttpUrl;
     TitleBarBean mTitleBarBean;
     static PopupWindow mPopupWindow;
@@ -82,7 +90,7 @@ public class MainActivity extends BaseActivity {
         mWebView.getSettings().setJavaScriptEnabled(true);
         //设置跨域问题
         mWebView.getSettings().setAllowUniversalAccessFromFileURLs(true);
-        mWebView.addJavascriptInterface(new HuamboJsInterface(), "contact" );
+        mWebView.addJavascriptInterface(new HuamboJsInterface(), "contact");
         //WebViewClient
         mWebView.setWebViewClient(mWebViewClient);
         //WebChromeClient
@@ -95,8 +103,8 @@ public class MainActivity extends BaseActivity {
     private void getAddressBook() {
         //获取下一个界面的通讯录
         UserBean userBean = (UserBean) SpUtil.getObject(getApplicationContext(), Constant.USER_SHAREPRE, UserBean.class);
-        if (userBean != null){
-            final String url = Constant.BASE_URL + Constant.HUAMBO_MAILLIST + "{UserID:'"+userBean.getUsername()+"'}";
+        if (userBean != null) {
+            final String url = Constant.BASE_URL + Constant.HUAMBO_MAILLIST + "{UserID:'" + userBean.getUsername() + "'}";
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
                     .url(url)
@@ -104,8 +112,9 @@ public class MainActivity extends BaseActivity {
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d(TAG, "onFailure: "+e.getMessage());
+                    Log.d(TAG, "onFailure: " + e.getMessage());
                 }
+
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     result(response.body().string());
@@ -115,7 +124,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void result(String result) {
-        FileDataUtil.saveDataToFile(getApplicationContext(),result,"AddressBook");
+        FileDataUtil.saveDataToFile(getApplicationContext(), result, "AddressBook");
     }
 
     /**
@@ -124,13 +133,13 @@ public class MainActivity extends BaseActivity {
     public final class HuamboJsInterface {
         @JavascriptInterface
         public void clickAndroid(String json) {
-            Log.e("", "clickAndroid: "+json);
+            Log.e("", "clickAndroid: " + json);
             String mType = JsonConvert.analysisJson(json, new TypeToken<String>() {
             }.getType(), "type");
             if (!TextUtils.isEmpty(mType)) {
                 switch (mType) {
                     case "phonebook":
-                        startActivity(new Intent(getApplicationContext(),MailActivity.class));
+                        startActivity(new Intent(getApplicationContext(), MailActivity.class));
                         break;
                     case "logout":
                         SpUtil.clear();
@@ -199,25 +208,96 @@ public class MainActivity extends BaseActivity {
         }
     };
 
-    @OnClick({R.id.lyLeftContainer})void onClick(View view){
-        switch (view.getId()){
+    @OnClick({R.id.lyLeftContainer, R.id.tv_sum, R.id.tv_index, R.id.tv_map, R.id.tv_center})
+    void onClick(View view) {
+        switch (view.getId()) {
             case R.id.lyLeftContainer:
-                if (null != mWebView){
+                if (null != mWebView) {
                     mWebView.goBack();
                 }
                 break;
+            case R.id.tv_index:
+                ToastUtil.show(getApplicationContext(), "待续");
+                break;
+
+            case R.id.tv_map:
+                ToastUtil.show(getApplicationContext(), "待续");
+                break;
+
+            case R.id.tv_sum:
+                showPopupSum();
+                break;
+            case R.id.tv_center:
+                showPopupCenter();
+                break;
+
         }
     }
 
+    private void showPopupCenter() {
+        View contentView = LayoutInflater.from(this).inflate(R.layout.pop_center, null);
+        PopupWindow pop = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        pop.setContentView(contentView);
+        pop.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        pop.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        pop.setBackgroundDrawable(new BitmapDrawable());
+        pop.setOutsideTouchable(true);
+        pop.setAnimationStyle(R.anim.mypop_anim);
+        pop.showAtLocation(tv_center, Gravity.BOTTOM, 220, 112);
+        contentView.findViewById(R.id.tv_data).setOnClickListener(v -> {
+            ToastUtil.show(getApplicationContext(), "待续");
+            pop.dismiss();
+        });
+        contentView.findViewById(R.id.tv_table).setOnClickListener(v -> {
+            ToastUtil.show(getApplicationContext(), "待续");
+            pop.dismiss();
+        });
+        contentView.findViewById(R.id.tv_rules).setOnClickListener(v -> {
+            ToastUtil.show(getApplicationContext(), "待续");
+            pop.dismiss();
+        });
+        contentView.findViewById(R.id.tv_standard).setOnClickListener(v -> {
+            ToastUtil.show(getApplicationContext(), "待续");
+            pop.dismiss();
+        });
+    }
+
+    private void showPopupSum() {
+        View contentView = LayoutInflater.from(this).inflate(R.layout.pop_sum, null);
+        PopupWindow pop = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        pop.setContentView(contentView);
+        pop.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        pop.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        pop.setBackgroundDrawable(new BitmapDrawable());
+        pop.setOutsideTouchable(true);
+        pop.setAnimationStyle(R.anim.mypop_anim);
+        pop.showAtLocation(tv_sum, Gravity.BOTTOM, 20, 112);
+        contentView.findViewById(R.id.tv_table).setOnClickListener(v -> {
+            ToastUtil.show(getApplicationContext(), "待续");
+            pop.dismiss();
+        });
+        contentView.findViewById(R.id.tv_distribution).setOnClickListener(v -> {
+            ToastUtil.show(getApplicationContext(), "待续");
+            pop.dismiss();
+        });
+        contentView.findViewById(R.id.tv_project).setOnClickListener(v -> {
+            ToastUtil.show(getApplicationContext(), "待续");
+            pop.dismiss();
+        });
+    }
+
     private long firstTime = 0;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode ==KeyEvent.KEYCODE_BACK){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             long secondTime = System.currentTimeMillis();
-            if (secondTime - firstTime > 2000){
-                ToastUtil.show(getApplicationContext(),"再按一次退出程序");
+            if (secondTime - firstTime > 2000) {
+                ToastUtil.show(getApplicationContext(), "再按一次退出程序");
                 firstTime = secondTime;
-            }else {
+            } else {
                 finish();
             }
         }

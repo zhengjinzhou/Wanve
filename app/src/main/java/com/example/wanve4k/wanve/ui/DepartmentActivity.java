@@ -27,6 +27,7 @@ public class DepartmentActivity extends BaseActivity {
     static List<MailBean.UserListBean> mTempUserListBeans ;
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     @BindView(R.id.tv_title) TextView tv_title;
+    @BindView(R.id.txtTitle) TextView txtTitle;
 
     MailBean mailBean;
     private DepartmentAdapter mDepartmentAdapter;
@@ -45,6 +46,7 @@ public class DepartmentActivity extends BaseActivity {
     }
     @Override
     public void init() {
+        txtTitle.setText("通讯录");
         mDepartmentAdapter = new DepartmentAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mDepartmentAdapter);
