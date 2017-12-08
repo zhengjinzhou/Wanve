@@ -2,6 +2,7 @@ package com.example.wanve4k.wanve.ui;
 
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
@@ -46,11 +47,17 @@ import okhttp3.Response;
 public class MainActivity extends BaseActivity {
 
     private static final String TAG = "MainActivity";
-    @BindView(R.id.web_main) WebView mWebView;
-    @BindView(R.id.iv_titleBar_right_img) ImageView iv_titleBar_right_img;
-    @BindView(R.id.v_top) View v_top;
-    @BindView(R.id.tv_sum) TextView tv_sum;
-    @BindView(R.id.tv_center) TextView tv_center;
+    @BindView(R.id.web_main)
+    WebView mWebView;
+    @BindView(R.id.iv_titleBar_right_img)
+    ImageView iv_titleBar_right_img;
+    @BindView(R.id.v_top)
+    View v_top;
+    @BindView(R.id.tv_sum)
+    TextView tv_sum;
+    @BindView(R.id.tv_center)
+    TextView tv_center;
+    @BindView(R.id.tv_index) TextView tv_index;
 
     private String mHttpUrl;
     TitleBarBean mTitleBarBean;
@@ -64,6 +71,9 @@ public class MainActivity extends BaseActivity {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void init() {
+
+        initBottom();
+
         mTitleBarBean = new TitleBarBean();
         mTitleBarBean.setLeftIsVisible(true);
         //绑定  TitleBarBean   mActivityMainBinding.titleBar.setTitle(mTitleBarBean);
@@ -98,6 +108,14 @@ public class MainActivity extends BaseActivity {
         //加载并获取添加头部信息
         mWebView.loadUrl(mHttpUrl);
         getAddressBook();
+    }
+
+    private void initBottom() {
+        tv_index.setTextColor(getResources().getColor(R.color.txt_2));
+        Drawable img = tv_index.getResources().getDrawable(R.drawable.index_on);
+        // 调用setCompoundDrawables时，必须调用Drawable.setBounds()方法,否则图片不显示
+        img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
+        tv_index.setCompoundDrawables(null, img, null,null); //设置左图标
     }
 
     private void getAddressBook() {

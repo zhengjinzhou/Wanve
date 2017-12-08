@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -9,6 +9,11 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/black</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="My_CheckBox" parent="@android:style/Widget.Material.CompoundButton.CheckBox" tools:targetApi="lollipop">
+        <item name="android:colorControlActivated">@color/white</item>
+        <item name="android:colorControlNormal">@color/colorPrimaryDark</item>
     </style>
 
     <!-- 对话框样式 -->

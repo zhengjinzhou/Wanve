@@ -2,11 +2,7 @@ package com.example.wanve4k.wanve.ui;
 
 
 import android.text.InputType;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,22 +14,27 @@ import com.example.wanve4k.wanve.base.BaseActivity;
 import com.example.wanve4k.wanve.bean.UserBean;
 import com.example.wanve4k.wanve.constant.Constant;
 import com.example.wanve4k.wanve.util.SpUtil;
-import com.example.wanve4k.wanve.util.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.OnTextChanged;
 
 public class VpnLoginActivity extends BaseActivity {
 
     private static final String TAG = "VpnLoginActivity";
-    @BindView(R.id.rg_vpn) RadioGroup rg_vpn;
-    @BindView(R.id.et_username) EditText et_username;
-    @BindView(R.id.et_password) EditText et_password;
-    @BindView(R.id.ll_vpn) LinearLayout ll_vpn;
-    @BindView(R.id.iv_show) ImageView iv_show;
-    @BindView(R.id.rb_yes) RadioButton rb_yes;
-    @BindView(R.id.rb_no) RadioButton rb_no;
+    @BindView(R.id.rg_vpn)
+    RadioGroup rg_vpn;
+    @BindView(R.id.et_username)
+    EditText et_username;
+    @BindView(R.id.et_password)
+    EditText et_password;
+    @BindView(R.id.ll_vpn)
+    LinearLayout ll_vpn;
+    @BindView(R.id.iv_show)
+    ImageView iv_show;
+    @BindView(R.id.rb_yes)
+    RadioButton rb_yes;
+    @BindView(R.id.rb_no)
+    RadioButton rb_no;
     public boolean isVpnLogin;
     private UserBean userBean;
 
@@ -49,14 +50,14 @@ public class VpnLoginActivity extends BaseActivity {
         userBean = new UserBean();
 
         //记住当前是否勾选过状态以及vpn账号密码框
-        UserBean user  = (UserBean) SpUtil.getObject(this, Constant.USER_VPN_LOGINCACHE, UserBean.class);
-        if (user != null){
+        UserBean user = (UserBean) SpUtil.getObject(this, Constant.USER_VPN_LOGINCACHE, UserBean.class);
+        if (user != null) {
             et_username.setText(user.getVpnUsername());
             et_password.setText(user.getVpnPassword());
-            if (user.isVpn()){
+            if (user.isVpn()) {
                 rb_yes.setChecked(true);
                 isVpnLogin = true;
-            }else {
+            } else {
                 rb_no.setChecked(true);
                 isVpnLogin = false;
             }
@@ -77,10 +78,10 @@ public class VpnLoginActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.iv_clear, R.id.iv_show, R.id.lyLeftContainer})
+    @OnClick({R.id.iv_clear, R.id.iv_show, R.id.bt_back})
     void onClick(View view) {
         switch (view.getId()) {
-            case R.id.lyLeftContainer:
+            case R.id.bt_back:
                 finish();
                 break;
             case R.id.iv_clear:

@@ -7,36 +7,58 @@
     android:orientation="vertical"
     tools:context="com.example.wanve4k.wanve.ui.VpnLoginActivity">
 
-    <include layout="@layout/view_titlebar" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/vpn_top"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:gravity="center"
+            android:text="智慧政务管理平台"
+            android:textColor="#faf908"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="欢迎使用vpn接入系统"
+            android:textColor="#fff"
+            android:textSize="26sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Welcome to the VPN access system"
+            android:textColor="#fff" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="50dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/vpn_login_logo" />
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
             android:background="@drawable/login_input_border"
             android:gravity="center_vertical"
-            android:padding="10dp">
+            android:padding="15dp">
 
             <ImageView
                 android:id="@+id/iv_login_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:src="@drawable/login_user_logo" />
+                android:src="@drawable/login_user" />
 
             <EditText
                 android:id="@+id/et_username"
@@ -50,7 +72,8 @@
                 android:ellipsize="end"
                 android:hint="请输入用户名"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColorHint="#555" />
 
             <ImageView
                 android:id="@+id/iv_clear"
@@ -64,14 +87,18 @@
 
         </RelativeLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#999" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:background="@drawable/login_input_border"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:padding="15dp">
 
             <ImageView
                 android:id="@+id/iv_login_pass"
@@ -79,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/login_pass_logo" />
+                android:src="@drawable/login_pass" />
 
             <EditText
                 android:id="@+id/et_password"
@@ -94,7 +121,8 @@
                 android:hint="请输入密码"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColorHint="#555" />
 
             <ImageView
                 android:id="@+id/iv_show"
@@ -105,13 +133,18 @@
                 android:padding="4dp" />
         </RelativeLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#999" />
+
         <LinearLayout
             android:id="@+id/ll_vpn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="20dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -134,7 +167,6 @@
                     android:text="是" />
 
                 <RadioButton
-
                     android:id="@+id/rb_no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -142,5 +174,16 @@
                     android:text="否" />
             </RadioGroup>
         </LinearLayout>
+
+        <Button
+            android:id="@+id/bt_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/bt_back"
+            android:text="返回"
+            android:textColor="#fff"
+            android:textSize="18sp" />
     </LinearLayout>
 </LinearLayout>

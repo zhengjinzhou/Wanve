@@ -2,29 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="#E8E8E8">
+    android:background="@color/bottom">
 
     <TextView
         android:id="@+id/tv_index"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
-        android:layout_gravity="center_vertical"
         android:layout_marginRight="0.5dp"
         android:layout_weight="1"
         android:background="@drawable/bg_click"
+        android:drawableTop="@drawable/index_off"
         android:gravity="center"
-        android:text="首页" />
+        android:paddingTop="4dp"
+        android:text="首页"
+        android:textColor="@color/txt_1"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_map"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
-        android:layout_gravity="center_vertical"
         android:layout_marginRight="0.5dp"
         android:layout_weight="1"
         android:background="@drawable/bg_click"
+        android:drawableTop="@drawable/map_off"
         android:gravity="center"
-        android:text="项目地图" />
+        android:paddingTop="4dp"
+        android:text="项目地图"
+        android:textColor="@color/txt_1"
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -33,6 +39,7 @@
         android:layout_weight="1">
 
         <RelativeLayout
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -43,12 +50,17 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:background="@drawable/bg_click"
+                android:drawableTop="@drawable/statistics_off"
                 android:gravity="center"
-                android:text="汇总统计" />
+                android:paddingTop="4dp"
+                android:text="汇总统计"
+                android:textColor="@color/txt_1"
+                android:textSize="18sp" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:padding="5dp"
@@ -57,6 +69,7 @@
     </LinearLayout>
 
     <LinearLayout
+
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1">
@@ -72,12 +85,17 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:background="@drawable/bg_click"
+                android:drawableTop="@drawable/center_off"
                 android:gravity="center"
-                android:text="知识中心" />
+                android:paddingTop="4dp"
+                android:text="知识中心"
+                android:textColor="@color/txt_1"
+                android:textSize="18sp" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:padding="5dp"

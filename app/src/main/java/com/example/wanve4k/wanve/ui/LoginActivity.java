@@ -41,11 +41,16 @@ import okhttp3.Response;
 public class LoginActivity extends BaseActivity {
 
     private static final String TAG = "LoginActivity";
-    @BindView(R.id.et_username) EditText et_username;
-    @BindView(R.id.et_password) EditText et_password;
-    @BindView(R.id.cb_remember) CheckBox cb_remember;
-    @BindView(R.id.cb_automatic) CheckBox cb_automatic;
-    @BindView(R.id.iv_show) ImageView iv_show;
+    @BindView(R.id.et_username)
+    EditText et_username;
+    @BindView(R.id.et_password)
+    EditText et_password;
+    @BindView(R.id.cb_remember)
+    CheckBox cb_remember;
+    @BindView(R.id.cb_automatic)
+    CheckBox cb_automatic;
+    @BindView(R.id.iv_show)
+    ImageView iv_show;
 
     boolean isRemenber = false;
     boolean isAutomatic = false;
@@ -114,6 +119,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void init() {
+
         userBean = new UserBean();
         //userVpn = (UserBean) SpUtil.getObject(this, Constant.USER_VPN_LOGINCACHE, UserBean.class);
         iv_show.setBackgroundResource(R.drawable.login__user_pass_visible);
@@ -129,8 +135,8 @@ public class LoginActivity extends BaseActivity {
 
     private void setInfo() {
         UserBean userBean = (UserBean) SpUtil.getObject(getApplicationContext(), Constant.USER_SHAREPRE, UserBean.class);
-        if (userBean != null){
-            Log.d(TAG, "setInfo: "+"空的吗？");
+        if (userBean != null) {
+            Log.d(TAG, "setInfo: " + "空的吗？");
             et_username.setText(userBean.getUsername());
             et_password.setText(userBean.getPassword());
             cb_remember.setChecked(userBean.isRemenber());
@@ -142,7 +148,7 @@ public class LoginActivity extends BaseActivity {
         cb_remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.d(TAG, "--------------------------------onCheckedChanged: "+isChecked);
+                Log.d(TAG, "--------------------------------onCheckedChanged: " + isChecked);
                 isRemenber = isChecked;
             }
         });
@@ -150,7 +156,7 @@ public class LoginActivity extends BaseActivity {
         cb_automatic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.d(TAG, "---------------------------------onCheckedChanged: "+isChecked);
+                Log.d(TAG, "---------------------------------onCheckedChanged: " + isChecked);
                 isAutomatic = isChecked;
                 isRemenber = isChecked;
             }
@@ -188,7 +194,7 @@ public class LoginActivity extends BaseActivity {
                     return;
                 }
                 final String login = Constant.BASE_URL + Constant.HUAMBO_LOGIN_URL + "{UserID:'" + username + "'" + ",UserPsw:'" + password + "'}";//登录验证地址
-                login(login,username,password);
+                login(login, username, password);
                 break;
             case R.id.tv_vpn:
                 startActivity(new Intent(getApplicationContext(), VpnLoginActivity.class));
@@ -198,7 +204,7 @@ public class LoginActivity extends BaseActivity {
 
     /**
      * 正常登陆
-     *
+     * <p>
      * vpn登陆
      *
      * @param login
@@ -225,7 +231,7 @@ public class LoginActivity extends BaseActivity {
                 final LoginBean loginBean = gson.fromJson(news, LoginBean.class);
                 //判断是否成功登录
                 if (loginBean.isResult()) {
-                    if (userVpn != null && userVpn.isVpn()){
+                    if (userVpn != null && userVpn.isVpn()) {
                         //启动vpn
                         Log.d(TAG, "onResponse: ---------------");
                         VPNManager.getInstance().setHandler(mHandler);
@@ -236,7 +242,7 @@ public class LoginActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 VPNManager.getInstance().startVPN("mobile.dg.cn", 443, userVpn.getVpnUsername(),
-                                        userVpn.getVpnPassword(),"", "",VPNManager.VpnFlag.VPN_FLAG_HTTP_PROXY
+                                        userVpn.getVpnPassword(), "", "", VPNManager.VpnFlag.VPN_FLAG_HTTP_PROXY
                                                 | VPNManager.VpnFlag.VPN_FLAG_SOCK_PROXY);
                             }
                         });
@@ -246,7 +252,7 @@ public class LoginActivity extends BaseActivity {
                         userBean.setAutomitic(isAutomatic);
                         userBean.setRemenber(isRemenber);
                         SpUtil.putObject(getApplication(), Constant.USER_SHAREPRE, userBean);
-                    }else{
+                    } else {
                         String main_url = Constant.HUAMBO_MAIN_URL + "{UserID:'" + user + "'" + ",UserPsw:'" + psw + "'}";//首页地址
                         userBean.setUsername(user);
                         userBean.setPassword(psw);
