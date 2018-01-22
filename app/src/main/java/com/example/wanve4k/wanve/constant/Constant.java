@@ -5,8 +5,16 @@ package com.example.wanve4k.wanve.constant;
  */
 
 public class Constant {
+    /***
+     * http://120.86.117.106/DMS_Phone
+
+     http://www.dgluqiao.com/DMS_Phone
+
+     bgs 123456
+     */
     //服务器地址
-    public static final String BASE_URL = "http://121.15.203.82:9210";
+    public static final String BASE_URL = "http://www.dgluqiao.com";
+    //public static final String BASE_URL = "http://19.108.192.125";
     //登录路径
     public static final String HUAMBO_LOGIN_URL = "/DMS_Phone/Login/LoginHandler.ashx?Action=Login&cmd=";
     //主页地址
@@ -14,7 +22,7 @@ public class Constant {
     //通讯录地址
     public static final String HUAMBO_MAILLIST = "/DMS_Phone/Contact/ContactHandler.ashx?Action=GetContactByUserID&para=";
     //vpn地址
-    public static final String VPN_UTL = "http://172.21.102.222:8000/dgjxj_touch/Login/Index.aspx";
+    public static final String VPN_UTL = "http://19.108.192.125/DMS_Phone/Login/LoginIndex.aspx?Quit=&JumpPage=&JumpPagePara=";
 
     public static final String MAIN_HTTPURL = "main_httpurl";
     public static final String USER_SHAREPRE = "user_sharepre";

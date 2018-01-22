@@ -3,6 +3,7 @@ package com.example.wanve4k.wanve.ui;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -33,6 +35,8 @@ import com.example.wanve4k.wanve.util.JsonConvert;
 import com.example.wanve4k.wanve.util.SpUtil;
 import com.example.wanve4k.wanve.util.ToastUtil;
 import com.google.gson.reflect.TypeToken;
+
+import net.arraynetworks.vpn.VPNManager;
 
 import java.io.IOException;
 
@@ -94,15 +98,19 @@ public class MainActivity extends BaseActivity {
         if (!TextUtils.isEmpty(getIntent().getStringExtra(Constant.MAIN_HTTPURL))) {
             mHttpUrl = getIntent().getStringExtra(Constant.MAIN_HTTPURL);
         }
+        Log.d(TAG, "init----地址: "+mHttpUrl);
         //适配
         mWebView.getSettings().setUseWideViewPort(true);
         mWebView.getSettings().setLoadWithOverviewMode(true);
         mWebView.getSettings().setJavaScriptEnabled(true);
         //设置跨域问题
+        mWebView.getSettings().setSupportZoom(true);
+        mWebView.getSettings().setTextSize(WebSettings.TextSize.SMALLER);
         mWebView.getSettings().setAllowUniversalAccessFromFileURLs(true);
         mWebView.addJavascriptInterface(new HuamboJsInterface(), "contact");
         //WebViewClient
         mWebView.setWebViewClient(mWebViewClient);
+
         //WebChromeClient
         mWebView.setWebChromeClient(mWebChromeClient);
         //加载并获取添加头部信息
@@ -212,12 +220,15 @@ public class MainActivity extends BaseActivity {
 
     //WebViewClient
     WebViewClient mWebViewClient = new WebViewClient() {
-        @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            // 消耗掉这个事件。Android中返回True的即到此为止吧,事件就会不会冒泡传递了，我们称之为消耗掉
-            // 使用自己的WebView组件来响应Url加载事件，而不是使用默认浏览器器加载页面
-            mWebView.loadUrl(url);
-            return false;
+            if(url.startsWith("http:") || url.startsWith("https:") ) {
+                view.loadUrl(url);
+                return false;
+            }else{
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(intent);
+                return true;
+            }
         }
 
         @Override

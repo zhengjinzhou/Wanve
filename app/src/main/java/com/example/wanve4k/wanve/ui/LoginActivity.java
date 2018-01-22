@@ -1,6 +1,9 @@
 package com.example.wanve4k.wanve.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -56,6 +59,7 @@ public class LoginActivity extends BaseActivity {
     boolean isAutomatic = false;
     private UserBean userBean;
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -99,7 +103,7 @@ public class LoginActivity extends BaseActivity {
                     if (0 == mMethods.length) {
                         VPNManager.getInstance().cancelLogin();
                     }
-                    ToastUtil.show(getApplicationContext(), "vpn账号或密码有误-------这里有问题呢------");
+                    ToastUtil.show(getApplicationContext(), "vpn账号或密码有误");
                     break;
                 case Common.VpnMsg.MSG_VPN_DEVREG:
                     Log.d("MSG_VPN_DEVREG", "handleMessage: ");
@@ -120,6 +124,14 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void init() {
 
+        //Android5.0以上状态栏颜色修改
+        if(Build.VERSION.SDK_INT >= 21){
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    |View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+
+
         userBean = new UserBean();
         //userVpn = (UserBean) SpUtil.getObject(this, Constant.USER_VPN_LOGINCACHE, UserBean.class);
         iv_show.setBackgroundResource(R.drawable.login__user_pass_visible);
@@ -138,28 +150,22 @@ public class LoginActivity extends BaseActivity {
         if (userBean != null) {
             Log.d(TAG, "setInfo: " + "空的吗？");
             et_username.setText(userBean.getUsername());
-            et_password.setText(userBean.getPassword());
+           // et_password.setText(userBean.getPassword());
             cb_remember.setChecked(userBean.isRemenber());
             cb_automatic.setChecked(userBean.isAutomitic());
         }
     }
 
     private void getCheckBox() {
-        cb_remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.d(TAG, "--------------------------------onCheckedChanged: " + isChecked);
-                isRemenber = isChecked;
-            }
+        cb_remember.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            Log.d(TAG, "--------------------------------onCheckedChanged: " + isChecked);
+            isRemenber = isChecked;
         });
 
-        cb_automatic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.d(TAG, "---------------------------------onCheckedChanged: " + isChecked);
-                isAutomatic = isChecked;
-                isRemenber = isChecked;
-            }
+        cb_automatic.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            Log.d(TAG, "---------------------------------onCheckedChanged: " + isChecked);
+            isAutomatic = isChecked;
+            isRemenber = isChecked;
         });
     }
 
@@ -251,22 +257,27 @@ public class LoginActivity extends BaseActivity {
                         userBean.setPassword(psw);
                         userBean.setAutomitic(isAutomatic);
                         userBean.setRemenber(isRemenber);
+                        String main_url = Constant.VPN_UTL;
                         SpUtil.putObject(getApplication(), Constant.USER_SHAREPRE, userBean);
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra(Constant.MAIN_HTTPURL, String.format(main_url));
+                        startActivity(intent);
+                        finish();
                     } else {
                         String main_url = Constant.HUAMBO_MAIN_URL + "{UserID:'" + user + "'" + ",UserPsw:'" + psw + "'}";//首页地址
+                        Log.d(TAG, "onResponse: " + main_url);
                         userBean.setUsername(user);
                         userBean.setPassword(psw);
                         userBean.setAutomitic(isAutomatic);
                         userBean.setRemenber(isRemenber);
                         SpUtil.putObject(getApplication(), Constant.USER_SHAREPRE, userBean);
-                        Log.d(TAG, "onResponse: " + main_url);
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.putExtra(Constant.MAIN_HTTPURL, String.format(main_url));
                         startActivity(intent);
                         finish();
                     }
-
                 } else {
                     runOnUiThread(new Runnable() {
                         @Override
