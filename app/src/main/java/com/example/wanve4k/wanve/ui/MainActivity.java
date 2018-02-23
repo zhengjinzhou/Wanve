@@ -105,7 +105,7 @@ public class MainActivity extends BaseActivity {
         mWebView.getSettings().setJavaScriptEnabled(true);
         //设置跨域问题
         mWebView.getSettings().setSupportZoom(true);
-        mWebView.getSettings().setTextSize(WebSettings.TextSize.SMALLER);
+        mWebView.getSettings().setTextSize(WebSettings.TextSize.NORMAL);//设置字体大小
         mWebView.getSettings().setAllowUniversalAccessFromFileURLs(true);
         mWebView.addJavascriptInterface(new HuamboJsInterface(), "contact");
         //WebViewClient

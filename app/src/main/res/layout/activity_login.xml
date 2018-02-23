@@ -123,6 +123,7 @@
             android:layout_marginTop="20dp">
 
             <CheckBox
+                android:textSize="16sp"
                 android:id="@+id/cb_remember"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -132,6 +133,7 @@
                 android:theme="@style/My_CheckBox" />
 
             <CheckBox
+                android:textSize="16sp"
                 android:id="@+id/cb_automatic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
