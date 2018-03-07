@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -110,14 +111,29 @@ public class MainActivity extends BaseActivity {
         mWebView.addJavascriptInterface(new HuamboJsInterface(), "contact");
         //WebViewClient
         mWebView.setWebViewClient(mWebViewClient);
-
-        //WebChromeClient
         mWebView.setWebChromeClient(mWebChromeClient);
         //加载并获取添加头部信息
         mWebView.loadUrl(mHttpUrl);
+        mWebView.setDownloadListener(new MyWebViewDownLoadListener());
         getAddressBook();
     }
 
+    /**
+     * 如果要实现文件下载的功能，需要设置WebView的DownloadListener，通过实现自己的DownloadListener来实现文件的下载
+     */
+    private class MyWebViewDownLoadListener implements DownloadListener {
+        @Override
+        public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
+            Log.i("tag", "url="+url);
+            Log.i("tag", "userAgent="+userAgent);
+            Log.i("tag", "contentDisposition="+contentDisposition);
+            Log.i("tag", "mimetype="+mimetype);
+            Log.i("tag", "contentLength="+contentLength);
+            Uri uri = Uri.parse(url);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        }
+    }
     private void initBottom() {
         tv_index.setTextColor(getResources().getColor(R.color.txt_2));
         Drawable img = tv_index.getResources().getDrawable(R.drawable.index_on);
@@ -322,14 +338,11 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            long secondTime = System.currentTimeMillis();
-            if (secondTime - firstTime > 2000) {
-                ToastUtil.show(getApplicationContext(), "再按一次退出程序");
-                firstTime = secondTime;
-            } else {
-                finish();
+            if (mWebView.canGoBack()) {
+                mWebView.goBack();//返回上一页面
+                return true;
             }
         }
-        return false;
+        return super.onKeyDown(keyCode, event);
     }
 }
